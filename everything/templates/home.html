@@ -7,10 +7,13 @@
     <h1>Welcome to Our Blog!</h1>
     <p>This is a place for sharing thoughts and ideas.</p>
     <p>Press Here for the list Of <a href="/blog/blogs">All Blogs</a></p>
+    <p>Press Here for the list Of <a href="/blog/bloggers">All Bloggerss</a></p>
+    <p>Press Here to create a <a href="blog/create/">New Blog</a></p>
 
     <ul class="sidebar">
         <!-- Other links -->
         <li><a href="{% url 'login' %}">Log In</a></li>
+        <li><a href="{% url 'signup' %}">Sign up</a></li>
         <li><a href="{% url 'logout' %}">Log Out</a></li>
         <li><a href="{% url 'password_reset' %}">Reset Password</a></li>
     </ul>
