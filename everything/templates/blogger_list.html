@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blogger List</title>
+</head>
+<body>
+    <h1>List of Bloggers</h1>
+    <ul>
+        {% for blogger in bloggers %}
+            <li><a href="{% url 'author-detail' blogger.pk %}">{{ blogger.name }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

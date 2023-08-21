@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blog List</title>
+</head>
+<body>
+    <h1>Latest Blog Posts</h1>
+    <h3>create a <a href="/blog/create/">new blog</a></h3>
+    <h3>Or look at existing blogs down below</h3>
+    <ul>
+        {% for post in page_obj %}
+            <li><a href="{% url 'blog-detail' post.pk %}">{{ post.title }}</a> - {{ post.post_date }} by <a href="{% url 'author-detail' post.author.pk %}">{{ post.author }}</a></li>
+        {% endfor %}
+    </ul>
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last</a>
+            {% endif %}
+        </span>
+    </div>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ blog_post.title }}</title>
+</head>
+<body>
+    <h1>{{ blog_post.title }}</h1>
+    <p>By <a href="{% url 'author-detail' blog_post.author.pk %}">{{ blog_post.author }}</a> - {{ blog_post.post_date }}</p>
+    <p>{{ blog_post.content }}</p>
+    <h2>Comments</h2>
+    <ul>
+        {% for comment in comments %}
+            <li>{{ comment.author_name }} - {{ comment.post_date }}<br>{{ comment.content }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'create-comment' blog_post.pk %}">Add a Comment</a>
+</body>
+</html>
