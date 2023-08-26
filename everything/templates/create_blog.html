@@ -1,7 +1,11 @@
-<!-- create_blog.html -->
-  <h2>Create New Blog</h2>
-  <form method="post">
+{% block content %}
+  <h2>Create a Blog Post</h2>
+  <form method="POST">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Create Blog</button>
   </form>
+  {% if form.errors %}
+    <p class="error">Please correct the errors above.</p>
+  {% endif %}
+{% endblock %}

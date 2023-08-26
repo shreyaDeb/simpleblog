@@ -6,4 +6,3 @@ class YourAppConfig(AppConfig):
 
     def ready(self):
         import everything.signals
-

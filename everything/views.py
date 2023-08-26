@@ -1,13 +1,13 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import BlogPost, Comment
-from .models import Blogger
-from .models import BlogPost
-from .forms import CommentForm
-from .forms import BlogPostForm
+from .models import BlogPost, Comment, Blogger, BlogPost
+from .forms import CommentForm, BlogPostForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
+from django.contrib.auth.models import User
+
+
 
 # Create your views here.
 def home(request):
@@ -50,18 +50,21 @@ def create_comment(request, blog_id):
 
     return render(request, 'comment_form.html', {'form': form, 'blog_post': blog_post})
 
+@login_required
 def create_blog(request):
     if request.method == 'POST':
         form = BlogPostForm(request.POST)
         if form.is_valid():
-            new_blog = form.save(commit=False)
-            new_blog.author = request.user.blogger  # Assuming you have a Blogger profile associated with the logged-in user
-            new_blog.save()
-            return redirect('blog-list')  # Redirect to the list of blogs
+            blog = form.save(commit=False)
+            blogger = Blogger.objects.get(user=request.user)
+            blog.author = blogger
+            blog.save()
+            return redirect('blog-list')
     else:
         form = BlogPostForm()
 
-    return render(request, 'create_blog.html', {'form': form})
+    context = {'form': form}
+    return render(request, 'create_blog.html', context)
 
 
 @login_required
@@ -77,9 +80,14 @@ def signup(request):
             user = form.save()
             # Log the user in.
             login(request, user)
-            return redirect('home')  # Redirect to the homepage or any other desired page.
+            return redirect('blog-home')  # Redirect to the homepage or any other desired page.
     else:
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
 
+def custom_logout(request):
+    logout(request)
+    return redirect('custom_logout_page')
 
+def custom_logout_page(request):
+    return render(request, 'custom_logout_page.html')

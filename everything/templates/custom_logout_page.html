@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Countdown Page</title>
+    <style>
+        /* Add your CSS styling here */
+    </style>
+</head>
+<body>
+    <h1>You have logged out</h1>
+
+    <h1>Redirecting in: <span id="countdown">3</span> seconds</h1>
+    <script>
+        var countdownElement = document.getElementById('countdown');
+        var countdown = 3; 
+
+        function updateCountdown() {
+            countdownElement.textContent = countdown;
+            countdown--;
+
+            if (countdown < 0) {
+                // Redirect to the desired page after countdown ends
+                window.location.href = "{% url 'home' %}";
+            } else {
+                setTimeout(updateCountdown, 1000); // Update every second
+            }
+        }
+
+        updateCountdown(); // Start the countdown
+    </script>
+</body>
+</html>

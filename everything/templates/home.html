@@ -1,22 +1,38 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
 <head>
+    <link rel="stylesheet" href="{% static "home.css" %}">
     <title>Home</title>
 </head>
 <body>
-    <h1>Welcome to Our Blog!</h1>
+    <header class="site-header">
+        <div class="site-identity">
+            <h1><a href="/blog/">Anonymas Blogs</a></h1>
+        </div>
+        <nav class="site-navigation">
+            <ul class="nav">
+                <!-- Other links -->
+                {% if user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'blog-list' %}">Blogs</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'blogger-list' %}">Bloggers</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+                        <li><b><a href="">{{ user.username }}</a></b></li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'signup' %}">Signup</a></li>
+                        <li><a href="{% url 'password_reset' %}">Reset Password</a></li>
+                        <li>Guest User</li>
+
+                    {% endif %}
+                </ul>
+            </nav>
+        </header>
+    <h2>Welcome to Our Blog!</h2>
     <p>This is a place for sharing thoughts and ideas.</p>
     <p>Press Here for the list Of <a href="/blog/blogs">All Blogs</a></p>
     <p>Press Here for the list Of <a href="/blog/bloggers">All Bloggerss</a></p>
-    <p>Press Here to create a <a href="blog/create/">New Blog</a></p>
-
-    <ul class="sidebar">
-        <!-- Other links -->
-        <li><a href="{% url 'login' %}">Log In</a></li>
-        <li><a href="{% url 'signup' %}">Sign up</a></li>
-        <li><a href="{% url 'logout' %}">Log Out</a></li>
-        <li><a href="{% url 'password_reset' %}">Reset Password</a></li>
-    </ul>
+    <p>Press Here to create a <a href="/blog/create/">New Blog</a></p>
     
 </body>
 </html>

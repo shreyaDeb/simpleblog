@@ -1,16 +1,42 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
-<head>
+<head>    
+    <link rel="stylesheet" href="{% static "home.css" %}">
     <title>Blog List</title>
 </head>
 <body>
+    <header class="site-header">
+        <div class="site-identity">
+            <h1><a href="/blog/">Anonymas Blogs</a></h1>
+        </div>
+        <nav class="site-navigation">
+            <ul class="nav">
+                <!-- Other links -->
+                {% if user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'blog-list' %}">Blogs</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'blogger-list' %}">Bloggers</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+                        <li><b><a href="">{{ user.username }}</a></b></li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'signup' %}">Signup</a></li>
+                        <li><a href="{% url 'password_reset' %}">Reset Password</a></li>
+                        <li>Guest User</li>
+
+                    {% endif %}
+                </ul>
+            </nav>
+        </header>
     <h1>Latest Blog Posts</h1>
     <h3>create a <a href="/blog/create/">new blog</a></h3>
     <h3>Or look at existing blogs down below</h3>
     <ul>
         {% for post in page_obj %}
             <li><a href="{% url 'blog-detail' post.pk %}">{{ post.title }}</a> - {{ post.post_date }} by <a href="{% url 'author-detail' post.author.pk %}">{{ post.author }}</a></li>
-        {% endfor %}
+            <p>Author: {{ blog.author.username }}</p>
+        
+            {% endfor %}
     </ul>
     <div class="pagination">
         <span class="step-links">

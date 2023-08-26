@@ -1,0 +1,26 @@
+<!-- base.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% block title %}My Blog{% endblock %}</title>
+  <!-- Add your CSS and other head elements here -->
+</head>
+<body>
+
+    <div class="navbar">
+    <div class="nav-left">
+        <a href="{% url 'home' %}">Home</a>
+    </div>
+    <div class="nav-right">
+        <a href="/blog">Blogs</a>
+        <a href="/blog/bloggers">Bloggers</a>
+        <a href="{% url 'login' %}">Login</a>
+    </div>
+    </div>
+
+    <div class="content">
+    {% block content %}{% endblock %}
+    </div>
+
+</body>
+</html>

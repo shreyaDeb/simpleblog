@@ -4,6 +4,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import BlogPost
+from .models import Blogger
 
 class CommentForm(forms.ModelForm):
     class Meta:
@@ -35,5 +36,4 @@ class SignUpForm(UserCreationForm):
 class BlogPostForm(forms.ModelForm):
     class Meta:
         model = BlogPost
-        fields = ['title', 'content', 'author']
-
+        fields = ['title', 'content']

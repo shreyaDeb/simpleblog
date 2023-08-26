@@ -1,14 +1,39 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
 <head>
     <title>Blogger List</title>
+    <link rel="stylesheet" href="{% static "home.css" %}">
 </head>
 <body>
+    <header class="site-header">
+        <div class="site-identity">
+            <h1><a href="/blog/">Anonymas Blogs</a></h1>
+        </div>
+        <nav class="site-navigation">
+            <ul class="nav">
+                <!-- Other links -->
+                {% if user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'blog-list' %}">Blogs</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'blogger-list' %}">Bloggers</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+                        <li><b><a href="">{{ user.username }}</a></b></li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'signup' %}">Signup</a></li>
+                        <li><a href="{% url 'password_reset' %}">Reset Password</a></li>
+                        <li>Guest User</li>
+
+                    {% endif %}
+                </ul>
+            </nav>
+        </header>
+
     <h1>List of Bloggers</h1>
     <ul>
         {% for blogger in bloggers %}
-            <li><a href="{% url 'author-detail' blogger.pk %}">{{ blogger.name }}</a></li>
-        {% endfor %}
+    <li>{{ blogger.user.username }}</li>
+  {% endfor %}
     </ul>
 </body>
 </html>
